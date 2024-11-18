@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Devaito - Chargement</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Styles de base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #29367d;
+      --text-color: #333;
+      --success-color: #00AE6D;
+      --background-color: #f5f5f5;
+      --white: #fff;
+      --padding-standard: 40px;
+      --border-radius: 8px;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--background-color);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* En-tête */
+    .header {            
+      background-color: transparent;            
+      display: flex;
+      justify-content: start;
+      align-items: center;
+    }
+
+    .logo img {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        margin-top: 20px ;
+        margin-left: 20px ;
+        max-width: 120px;
+    }
+
+    /* Colonne gauche */
+    .left-column {
+      flex: 1;
+      padding: var(--padding-standard);
+      background-color: #efedfb;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .loading-content {
+      width: 100%;
+      max-width: 400px;
+      text-align: start;      
+    }
+
+    .generating {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+      font-size: 16px;
+      color: var(--text-color);
+    }
+
+    .lds-ring {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-right: 15px;
+    }
+
+    .lds-ring div {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border: 3px solid var(--primary-color);
+      border-radius: 50%;
+      animation: lds-ring 1.2s linear infinite;
+      border-color: var(--primary-color) transparent transparent transparent;
+    }
+
+    .lds-ring div:nth-child(1) { animation-delay: -0.45s; }
+    .lds-ring div:nth-child(2) { animation-delay: -0.3s; }
+    .lds-ring div:nth-child(3) { animation-delay: -0.15s; }
+
+    @keyframes lds-ring {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Colonne droite */
+    .right-column {
+      flex: 2;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .video-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .video-background video {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header{
+        padding: 20px;
+      }
+      .container {
+        flex-direction: column-reverse;
+      }
+      .logo img {
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+      }
+      .left-column,
+      .right-column {
+        flex: 1;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="https://www.devaito.com/public/tenant/tenant9075b507-8538-4d3e-8db8-d7affee7e55b/2024/Aug/Zsr7DZ9tjUGowQ5yQpzFRx0sPL08zpWmwQ0pGODL.png" alt="Logo">
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Colonne gauche -->
+    <div class="left-column">
+      <div class="loading-content">
+        <div class="loading-message">
+          <div class="generating">Just a moment</div>
+          <p>Your AI-powered site will be ready in 40 seconds.</p>
+        </div>
+        <div id="steps"></div>
+      </div>
+    </div>
+
+    <!-- Colonne droite -->
+    <div class="right-column">
+      <div class="video-background">
+        <video autoplay loop muted playsinline>
+          <source src="https://webcom.ma/a-steps/trustpilot.webm" type="video/webm">
+          Your browser does not support the video.
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const steps = [
+        "Server configuration",
+        "Dependency installation",
+        "Database configuration",
+        "Adding necessary tools",
+        "Performance improvement",
+        "Final touches",
+        "Get ready for the future!"
+      ];
+
+      const stepsContainer = document.getElementById('steps');
+      const generating = document.querySelector(".generating");
+      let dotCount = 0;
+
+      // Animation du titre
+      setInterval(() => {
+        generating.textContent = `Just a moment${'.'.repeat(dotCount % 4)}`;
+        dotCount++;
+      }, 1000);
+
+      // Affichage des étapes
+      steps.forEach((step, index) => {
+        const stepElement = document.createElement('div');
+        stepElement.className = 'step';
+        stepElement.innerHTML = `
+          <div class="lds-ring"><div></div><div></div><div></div></div>
+          <span>${step}</span>
+        `;
+        stepsContainer.appendChild(stepElement);
+
+        setTimeout(() => {
+          stepElement.querySelector('.lds-ring').innerHTML = '<i class="fa-solid fa-check" style="color: var(--success-color);"></i>';
+          stepElement.querySelector('span').style.color = 'var(--success-color)';
+        }, (index + 1) * 5000);
+      });
+    });
+  </script>
+</body>
+</html>
